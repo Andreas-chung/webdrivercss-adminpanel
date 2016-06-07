@@ -148,6 +148,9 @@ exports.downloadRepository = function(req, res) {
          */
         function(files, done) {
             return async.map(files, function(file, cb) {
+                if (file.indexOf('/') > -1) {
+                    file = file.replace(new RegExp('/', 'g'), '\\');
+                }
                 return fs.copy(file, file.replace(projectPath, tmpPath), cb);
             }, done);
         },
