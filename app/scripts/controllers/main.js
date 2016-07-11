@@ -11,14 +11,17 @@ angular.module('webdrivercssAdminpanelApp').controller('MainCtrl', function ($sc
     $scope.api = document.location.protocol + '//' + document.location.hostname + ':' + document.location.port + '/api/repositories/';
 
     if($routeParams.id && Object.keys(repositories).length) {
-        $scope.dir   = $routeParams.id;
+        $scope.dir = $routeParams.id;
         $scope.diffs = repositories[$routeParams.id].diffs;
         $scope.shots = repositories[$routeParams.id].images;
     }
+    $scope.failedRepos = _.pickBy(repositories, function(repo){
+        return repo.diffs.length >0;
+    });
 
-    angular.forEach($scope.diffs, function(diff) {
-        $scope.shots.splice($scope.shots.indexOf(diff.replace(/diff/,'regression')),1);
-        $scope.shots.splice($scope.shots.indexOf(diff.replace(/diff/,'baseline')),1);
+    angular.forEach($scope.diffs, function (diff) {
+        $scope.shots.splice($scope.shots.indexOf(diff.replace(/diff/, 'regression')), 1);
+        $scope.shots.splice($scope.shots.indexOf(diff.replace(/diff/, 'baseline')), 1);
     });
 
 });
