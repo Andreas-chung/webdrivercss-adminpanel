@@ -16,7 +16,7 @@ angular.module('webdrivercssAdminpanelApp').controller('MainCtrl', function ($sc
         $scope.shots = repositories[$routeParams.id].images;
     }
     $scope.failedRepos = _.pickBy(repositories, function(repo){
-        return repo.diffs.length >0;
+        return repo.diffs.length > 0;
     });
 
     angular.forEach($scope.diffs, function (diff) {
